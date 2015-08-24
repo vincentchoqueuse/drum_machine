@@ -1,0 +1,42 @@
+.cell{
+    height: 26px;
+    }
+
+body{
+    padding-top:25px;
+    font-size: 12px;
+    font: Helvetica,arial,nimbussansl,liberationsans,freesans,clean,sans-serif,"Segoe UI Emoji","Segoe UI Symbol";
+    }
+
+.full-width{
+    width: 100%;
+    }
+
+.ui_select_waveform{
+    width: 100%;
+    }
+
+label{
+    min-width: 40px;
+    text-align: left;
+    }
+
+li{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    }
+
+.waveform li{
+    display: inline;
+    }
+
+.tab-content > .tab-pane,.pill-content > .pill-pane {
+    display: block;     /* undo display:none          */
+    height: 0;          /* height:0 is also invisible */
+    overflow-y: hidden; /* no-overflow                */
+}
+
+.tab-content > .active,.pill-content > .active {
+    height: auto;       /* let the content decide it  */
+}
