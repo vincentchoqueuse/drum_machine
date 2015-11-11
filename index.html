@@ -45,9 +45,6 @@
         $(".cellstep").removeClass('active');
         $("#step").find("th").eq(step+1).find("button").addClass('active');
     };
-
-
-
     </script>
     
 </head>
@@ -55,12 +52,11 @@
 <body>
     <div class="container">
 
-        <div class="pull-right">
+        <div class="pull-right" style="margin-top:-10px;">
             <form class="form-inline">
                 
-                <input type="number" id="pattern_tempo" value=120 class="form-control"></input>
+                <input type="number" id="pattern_tempo" value=120 class="form-control" />
                 <button type="button" id="pattern_play" class="btn btn-default btn-primary form-control"  ><i class="fa fa-play"></i></button>
-                
                 <div class="form-group">
                     <div class="btn-group" data-toggle="buttons">
                         <label class="btn btn-default active">
@@ -80,7 +76,7 @@
                 </div>
         </div>
         
-        <ul class="nav nav-pills">
+        <ul class="nav nav-tabs">
             <li class="active"><a data-toggle="tab" href="#sequencer">Sequencer</a></li>
             <li ><a data-toggle="tab" href="#waveform">Editor</a></li>
             <li><a data-toggle="tab" href="#mixer">Mixer</a></li>
@@ -89,7 +85,6 @@
  
         <div class="tab-content">
             <div id="sequencer" class="tab-pane fade in active">
-                
                 <div class="pull-right" style="padding-top:17px;">
                     <div class="btn-group">
                         <button type="button" class="btn btn-default" id="pattern_clear">Clear</button>
@@ -102,15 +97,7 @@
                 <table class="table" id="table_sequencer">
                     <thead>
                         <tr id="step">
-                            <th>Step</td>
-                                <th><button type="button" class="btn btn-default cellstep"  ></button></th>
-                                <th><button type="button" class="btn btn-default cellstep" ></button></th>
-                                <th><button type="button" class="btn btn-default cellstep" ></button></th>
-                                <th><button type="button" class="btn btn-default cellstep" ></button></th>
-                                <th><button type="button" class="btn btn-default cellstep" d></button></th>
-                                <th><button type="button" class="btn btn-default cellstep" ></button></th>
-                                <th><button type="button" class="btn btn-default cellstep"  ></button></th>
-                                <th><button type="button" class="btn btn-default cellstep" ></button></th>
+                                <th>Step</td>
                                 <th><button type="button" class="btn btn-default cellstep"  ></button></th>
                                 <th><button type="button" class="btn btn-default cellstep" ></button></th>
                                 <th><button type="button" class="btn btn-default cellstep" ></button></th>
@@ -118,8 +105,16 @@
                                 <th><button type="button" class="btn btn-default cellstep" ></button></th>
                                 <th><button type="button" class="btn btn-default cellstep" ></button></th>
                                 <th><button type="button" class="btn btn-default cellstep"  ></button></th>
+                                <th><button type="button" class="btn btn-default cellstep" ></button></th>
                                 <th><button type="button" class="btn btn-default cellstep"  ></button></th>
-                                </tr>
+                                <th><button type="button" class="btn btn-default cellstep" ></button></th>
+                                <th><button type="button" class="btn btn-default cellstep" ></button></th>
+                                <th><button type="button" class="btn btn-default cellstep" ></button></th>
+                                <th><button type="button" class="btn btn-default cellstep" ></button></th>
+                                <th><button type="button" class="btn btn-default cellstep" ></button></th>
+                                <th><button type="button" class="btn btn-default cellstep"  ></button></th>
+                                <th><button type="button" class="btn btn-default cellstep"  ></button></th>
+                            </tr>
                     </thead>
                     <tbody>
                         <tr id="sample0">
@@ -143,7 +138,7 @@
                         </tr>
                         <tr id="sample1">
                             <td id="sample1name"></td>
-                            <<td><button type="button" class="btn btn-default cell col0" data-toggle="button" ></button></td>
+                            <td><button type="button" class="btn btn-default cell col0" data-toggle="button" ></button></td>
                             <td><button type="button" class="btn btn-default cell col1" data-toggle="button" ></button></td>
                             <td><button type="button" class="btn btn-default cell col2" data-toggle="button" ></button></td>
                             <td><button type="button" class="btn btn-default cell col3" data-toggle="button" ></button></td>
