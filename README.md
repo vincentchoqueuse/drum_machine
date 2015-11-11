@@ -6,5 +6,8 @@ The JS Drum machine web application uses
 * highcharts for displaying signal waveform
 * boostrap for the UI
 
-![JS drum machine](screenshot.jpg)
+![JS drum machine](screenshot1.jpg)
 
+![JS drum machine](screenshot2.jpg)
+
+![JS drum machine](screenshot3.jpg)
