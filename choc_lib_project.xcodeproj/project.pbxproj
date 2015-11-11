@@ -1,0 +1,96 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXFileReference section */
+		0A5023641B81E6E900238746 /* index.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
+		0A5023661B81E6E900238746 /* choc.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = choc.js; sourceTree = "<group>"; };
+		0A5023681B81E80000238746 /* UI.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = UI.js; sourceTree = "<group>"; };
+		0AAF39351B8B1F5300001CA2 /* choc.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; path = choc.css; sourceTree = "<group>"; };
+		0AEB3D9B1B8758D40019D73B /* choc_UI.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = choc_UI.js; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		0A013FD71A7E95D000F62368 = {
+			isa = PBXGroup;
+			children = (
+				0A5023631B81E6E900238746 /* css */,
+				0A5023641B81E6E900238746 /* index.html */,
+				0A5023651B81E6E900238746 /* js */,
+			);
+			sourceTree = "<group>";
+		};
+		0A5023631B81E6E900238746 /* css */ = {
+			isa = PBXGroup;
+			children = (
+				0AAF39351B8B1F5300001CA2 /* choc.css */,
+			);
+			path = css;
+			sourceTree = "<group>";
+		};
+		0A5023651B81E6E900238746 /* js */ = {
+			isa = PBXGroup;
+			children = (
+				0A5023661B81E6E900238746 /* choc.js */,
+				0AEB3D9B1B8758D40019D73B /* choc_UI.js */,
+				0A5023681B81E80000238746 /* UI.js */,
+			);
+			path = js;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXProject section */
+		0A013FD81A7E95D000F62368 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0610;
+			};
+			buildConfigurationList = 0A013FDB1A7E95D000F62368 /* Build configuration list for PBXProject "choc_lib_project" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 0A013FD71A7E95D000F62368;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+			);
+		};
+/* End PBXProject section */
+
+/* Begin XCBuildConfiguration section */
+		0A013FDC1A7E95D000F62368 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Debug;
+		};
+		0A013FDD1A7E95D000F62368 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		0A013FDB1A7E95D000F62368 /* Build configuration list for PBXProject "choc_lib_project" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0A013FDC1A7E95D000F62368 /* Debug */,
+				0A013FDD1A7E95D000F62368 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 0A013FD81A7E95D000F62368 /* Project object */;
+}

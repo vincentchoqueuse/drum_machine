@@ -1,0 +1,329 @@
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="./css/choc.css">
+    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="http://code.highcharts.com/highcharts.js"></script>
+    <script src="http://code.highcharts.com/highcharts-more.js"></script>
+    <script src="./js/choc.js"></script>
+    <script src="./js/choc_UI.js"></script>
+    <script src="./js/UI.js"></script>
+
+    <script>
+        var selected_sampler=0;
+        var parameter_list=["file","playbackRate","amp","start","stop","attack","decay","sustain","release"];
+        var files=['dnB_snare.wav','granular.wav','impact.wav','kick.wav','machine1.wav','machine2.wav','par1.wav','par2.wav','par3.wav','par4.wav','par5.wav','Respirator.wav','reverse.wav','closed_HH.wav','closed_HH2.wav','closed_HH3.wav','crunch.wav','debris.wav','glass.wav','kick_dubstep.wav','kick_hardcore.wav','kick_loud.wav', 'kick_simple.wav','kick_trap.wav','kick_vinyl.wav','noise1.wav','noise2.wav','noise3.wav','open_HH2.wav','shaker_1.wav','shaker_2.wav','snare_dnB.wav','snare_dnB2.wav'];
+        
+        var pad_trigger=1;
+        var AudioContext = window.AudioContext || window.webkitAudioContext;
+        var context = new AudioContext();
+        var selected_pattern=0;
+        var nb_tracks=7;
+        var isplaying=0;
+        var kit=[];
+        var pattern_manager=[];
+        var tempo=120;
+        var sequencer;
+        var nextNoteTime;
+        var samplerUI_array=new Array(nb_tracks);
+ 
+
+        $(function () {
+            
+            pattern_manager=new Pattern_manager(5,nb_tracks);
+            pattern_manager.init();
+            console.log(pattern_manager);
+            current_matrix=pattern_manager.duplicate(0);
+            sequencer=new Sequencer(context,current_matrix,kit);
+            init_ui();
+            sequencer.uistep=sequencer_drawstep;
+            
+          });
+    
+    function sequencer_drawstep(step){
+        $(".cellstep").removeClass('active');
+        $("#step").find("th").eq(step+1).find("button").addClass('active');
+    };
+    </script>
+    
+</head>
+
+<body>
+    <div class="container">
+
+        <div class="pull-right" style="margin-top:-10px;">
+            <form class="form-inline">
+                
+                <input type="number" id="pattern_tempo" value=120 class="form-control" />
+                <button type="button" id="pattern_play" class="btn btn-default btn-primary form-control"  ><i class="fa fa-play"></i></button>
+                <div class="form-group">
+                    <div class="btn-group" data-toggle="buttons">
+                        <label class="btn btn-default active">
+                            <input type="radio" name="options" class="pattern_selection" id="pattern1" autocomplete="off" checked> 1
+                        </label>
+                        <label class="btn btn-default ">
+                            <input type="radio" name="options" class="pattern_selection" id="pattern2" autocomplete="off" > 2
+                        </label>
+                        <label class="btn btn-default">
+                            <input type="radio" name="options" class="pattern_selection" id="pattern3" autocomplete="off" > 3
+                        </label>
+                        <label class="btn btn-default">
+                            <input type="radio" name="options" class="pattern_selection" id="pattern4" autocomplete="off" > 4
+                        </label>
+                    </div>
+                    
+                </div>
+        </div>
+        
+        <ul class="nav nav-tabs">
+            <li class="active"><a data-toggle="tab" href="#sequencer">Sequencer</a></li>
+            <li ><a data-toggle="tab" href="#waveform">Editor</a></li>
+            <li><a data-toggle="tab" href="#mixer">Mixer</a></li>
+        </ul>
+        
+ 
+        <div class="tab-content">
+            <div id="sequencer" class="tab-pane fade in active">
+                <div class="pull-right" style="padding-top:17px;">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default" id="pattern_clear">Clear</button>
+                        <button type="button" class="btn btn-default" id="pattern_save">Save</button>
+                    </div>
+                </div>
+                
+                <h3>Sequencer</h3>
+                
+                <table class="table" id="table_sequencer">
+                    <thead>
+                        <tr id="step">
+                                <th>Step</td>
+                                <th><button type="button" class="btn btn-default cellstep"  ></button></th>
+                                <th><button type="button" class="btn btn-default cellstep" ></button></th>
+                                <th><button type="button" class="btn btn-default cellstep" ></button></th>
+                                <th><button type="button" class="btn btn-default cellstep" ></button></th>
+                                <th><button type="button" class="btn btn-default cellstep" ></button></th>
+                                <th><button type="button" class="btn btn-default cellstep" ></button></th>
+                                <th><button type="button" class="btn btn-default cellstep"  ></button></th>
+                                <th><button type="button" class="btn btn-default cellstep" ></button></th>
+                                <th><button type="button" class="btn btn-default cellstep"  ></button></th>
+                                <th><button type="button" class="btn btn-default cellstep" ></button></th>
+                                <th><button type="button" class="btn btn-default cellstep" ></button></th>
+                                <th><button type="button" class="btn btn-default cellstep" ></button></th>
+                                <th><button type="button" class="btn btn-default cellstep" ></button></th>
+                                <th><button type="button" class="btn btn-default cellstep" ></button></th>
+                                <th><button type="button" class="btn btn-default cellstep"  ></button></th>
+                                <th><button type="button" class="btn btn-default cellstep"  ></button></th>
+                            </tr>
+                    </thead>
+                    <tbody>
+                        <tr id="sample0">
+                            <td id="sample0name"></td>
+                            <td><button type="button" class="btn btn-default cell col0" data-toggle="button" ></button></td>
+                            <td><button type="button" class="btn btn-default cell col1" data-toggle="button" ></button></td>
+                            <td><button type="button" class="btn btn-default cell col2" data-toggle="button" ></button></td>
+                            <td><button type="button" class="btn btn-default cell col3" data-toggle="button" ></button></td>
+                            <td><button type="button" class="btn btn-default cell col4" data-toggle="button" ></button></td>
+                            <td><button type="button" class="btn btn-default cell col5" data-toggle="button" ></button></td>
+                            <td><button type="button" class="btn btn-default cell col6" data-toggle="button" ></button></td>
+                            <td><button type="button" class="btn btn-default cell col7" data-toggle="button" ></button></td>
+                            <td><button type="button" class="btn btn-default cell col8" data-toggle="button" ></button></td>
+                            <td><button type="button" class="btn btn-default cell col9" data-toggle="button" ></button></td>
+                            <td><button type="button" class="btn btn-default cell col10" data-toggle="button" ></button></td>
+                            <td><button type="button" class="btn btn-default cell col11" data-toggle="button" ></button></td>
+                            <td><button type="button" class="btn btn-default cell col12" data-toggle="button" ></button></td>
+                            <td><button type="button" class="btn btn-default cell col13" data-toggle="button" ></button></td>
+                            <td><button type="button" class="btn btn-default cell col14" data-toggle="button" ></button></td>
+                            <td><button type="button" class="btn btn-default cell col15" data-toggle="button" ></button></td>
+                        </tr>
+                        <tr id="sample1">
+                            <td id="sample1name"></td>
+                            <td><button type="button" class="btn btn-default cell col0" data-toggle="button" ></button></td>
+                            <td><button type="button" class="btn btn-default cell col1" data-toggle="button" ></button></td>
+                            <td><button type="button" class="btn btn-default cell col2" data-toggle="button" ></button></td>
+                            <td><button type="button" class="btn btn-default cell col3" data-toggle="button" ></button></td>
+                            <td><button type="button" class="btn btn-default cell col4" data-toggle="button" ></button></td>
+                            <td><button type="button" class="btn btn-default cell col5" data-toggle="button" ></button></td>
+                            <td><button type="button" class="btn btn-default cell col6" data-toggle="button" ></button></td>
+                            <td><button type="button" class="btn btn-default cell col7" data-toggle="button" ></button></td>
+                            <td><button type="button" class="btn btn-default cell col8" data-toggle="button" ></button></td>
+                            <td><button type="button" class="btn btn-default cell col9" data-toggle="button" ></button></td>
+                            <td><button type="button" class="btn btn-default cell col10" data-toggle="button" ></button></td>
+                            <td><button type="button" class="btn btn-default cell col11" data-toggle="button" ></button></td>
+                            <td><button type="button" class="btn btn-default cell col12" data-toggle="button" ></button></td>
+                            <td><button type="button" class="btn btn-default cell col13" data-toggle="button" ></button></td>
+                            <td><button type="button" class="btn btn-default cell col14" data-toggle="button" ></button></td>
+                            <td><button type="button" class="btn btn-default cell col15" data-toggle="button" ></button></td>
+                        </tr>
+                        <tr id="sample2">
+                            <td id="sample2name"></td>
+                            <td><button type="button" class="btn btn-default cell col0" data-toggle="button" ></button></td>
+                            <td><button type="button" class="btn btn-default cell col1" data-toggle="button" ></button></td>
+                            <td><button type="button" class="btn btn-default cell col2" data-toggle="button" ></button></td>
+                            <td><button type="button" class="btn btn-default cell col3" data-toggle="button" ></button></td>
+                            <td><button type="button" class="btn btn-default cell col4" data-toggle="button" ></button></td>
+                            <td><button type="button" class="btn btn-default cell col5" data-toggle="button" ></button></td>
+                            <td><button type="button" class="btn btn-default cell col6" data-toggle="button" ></button></td>
+                            <td><button type="button" class="btn btn-default cell col7" data-toggle="button" ></button></td>
+                            <td><button type="button" class="btn btn-default cell col8" data-toggle="button" ></button></td>
+                            <td><button type="button" class="btn btn-default cell col9" data-toggle="button" ></button></td>
+                            <td><button type="button" class="btn btn-default cell col10" data-toggle="button" ></button></td>
+                            <td><button type="button" class="btn btn-default cell col11" data-toggle="button" ></button></td>
+                            <td><button type="button" class="btn btn-default cell col12" data-toggle="button" ></button></td>
+                            <td><button type="button" class="btn btn-default cell col13" data-toggle="button" ></button></td>
+                            <td><button type="button" class="btn btn-default cell col14" data-toggle="button" ></button></td>
+                            <td><button type="button" class="btn btn-default cell col15" data-toggle="button" ></button></td>
+                        </tr>
+                        <tr id="sample3">
+                            <td id="sample3name"></td>
+                            <td><button type="button" class="btn btn-default cell col0" data-toggle="button" ></button></td>
+                            <td><button type="button" class="btn btn-default cell col1" data-toggle="button" ></button></td>
+                            <td><button type="button" class="btn btn-default cell col2" data-toggle="button" ></button></td>
+                            <td><button type="button" class="btn btn-default cell col3" data-toggle="button" ></button></td>
+                            <td><button type="button" class="btn btn-default cell col4" data-toggle="button" ></button></td>
+                            <td><button type="button" class="btn btn-default cell col5" data-toggle="button" ></button></td>
+                            <td><button type="button" class="btn btn-default cell col6" data-toggle="button" ></button></td>
+                            <td><button type="button" class="btn btn-default cell col7" data-toggle="button" ></button></td>
+                            <td><button type="button" class="btn btn-default cell col8" data-toggle="button" ></button></td>
+                            <td><button type="button" class="btn btn-default cell col9" data-toggle="button" ></button></td>
+                            <td><button type="button" class="btn btn-default cell col10" data-toggle="button" ></button></td>
+                            <td><button type="button" class="btn btn-default cell col11" data-toggle="button" ></button></td>
+                            <td><button type="button" class="btn btn-default cell col12" data-toggle="button" ></button></td>
+                            <td><button type="button" class="btn btn-default cell col13" data-toggle="button" ></button></td>
+                            <td><button type="button" class="btn btn-default cell col14" data-toggle="button" ></button></td>
+                            <td><button type="button" class="btn btn-default cell col15" data-toggle="button" ></button></td>
+                        </tr>
+                        <tr id="sample4">
+                            <td id="sample4name"></td>
+                            <td><button type="button" class="btn btn-default cell col0" data-toggle="button" ></button></td>
+                            <td><button type="button" class="btn btn-default cell col1" data-toggle="button" ></button></td>
+                            <td><button type="button" class="btn btn-default cell col2" data-toggle="button" ></button></td>
+                            <td><button type="button" class="btn btn-default cell col3" data-toggle="button" ></button></td>
+                            <td><button type="button" class="btn btn-default cell col4" data-toggle="button" ></button></td>
+                            <td><button type="button" class="btn btn-default cell col5" data-toggle="button" ></button></td>
+                            <td><button type="button" class="btn btn-default cell col6" data-toggle="button" ></button></td>
+                            <td><button type="button" class="btn btn-default cell col7" data-toggle="button" ></button></td>
+                            <td><button type="button" class="btn btn-default cell col8" data-toggle="button" ></button></td>
+                            <td><button type="button" class="btn btn-default cell col9" data-toggle="button" ></button></td>
+                            <td><button type="button" class="btn btn-default cell col10" data-toggle="button" ></button></td>
+                            <td><button type="button" class="btn btn-default cell col11" data-toggle="button" ></button></td>
+                            <td><button type="button" class="btn btn-default cell col12" data-toggle="button" ></button></td>
+                            <td><button type="button" class="btn btn-default cell col13" data-toggle="button" ></button></td>
+                            <td><button type="button" class="btn btn-default cell col14" data-toggle="button" ></button></td>
+                            <td><button type="button" class="btn btn-default cell col15" data-toggle="button" ></button></td>
+                        </tr>
+                        <tr id="sample5">
+                            <td id="sample5name"></td>
+                            <td><button type="button" class="btn btn-default cell col0" data-toggle="button" ></button></td>
+                            <td><button type="button" class="btn btn-default cell col1" data-toggle="button" ></button></td>
+                            <td><button type="button" class="btn btn-default cell col2" data-toggle="button" ></button></td>
+                            <td><button type="button" class="btn btn-default cell col3" data-toggle="button" ></button></td>
+                            <td><button type="button" class="btn btn-default cell col4" data-toggle="button" ></button></td>
+                            <td><button type="button" class="btn btn-default cell col5" data-toggle="button" ></button></td>
+                            <td><button type="button" class="btn btn-default cell col6" data-toggle="button" ></button></td>
+                            <td><button type="button" class="btn btn-default cell col7" data-toggle="button" ></button></td>
+                            <td><button type="button" class="btn btn-default cell col8" data-toggle="button" ></button></td>
+                            <td><button type="button" class="btn btn-default cell col9" data-toggle="button" ></button></td>
+                            <td><button type="button" class="btn btn-default cell col10" data-toggle="button" ></button></td>
+                            <td><button type="button" class="btn btn-default cell col11" data-toggle="button" ></button></td>
+                            <td><button type="button" class="btn btn-default cell col12" data-toggle="button" ></button></td>
+                            <td><button type="button" class="btn btn-default cell col13" data-toggle="button" ></button></td>
+                            <td><button type="button" class="btn btn-default cell col14" data-toggle="button" ></button></td>
+                            <td><button type="button" class="btn btn-default cell col15" data-toggle="button" ></button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            
+            
+            <div id="waveform" class="tab-pane fade in">
+                <div class="pull-right" style="padding-top:20px;">
+                    <div class="form-group">
+                        <div class="btn-group" data-toggle="buttons">
+                            <label class="btn btn-default btn-xs active"><input type="radio" name="options" class="waveform_selection" id="waveform1" autocomplete="off" checked> 1</label>
+                            <label class="btn btn-default btn-xs "> <input type="radio" name="options" class="waveform_selection" id="waveform2" autocomplete="off" > 2 </label>
+                            <label class="btn btn-default btn-xs"> <input type="radio" name="options" class="waveform_selection" id="waveform3" autocomplete="off" > 3</label>
+                            <label class="btn btn-default btn-xs"><input type="radio" name="options" class="waveform_selection" id="waveform4" autocomplete="off" > 4</label>
+                            <label class="btn btn-default btn-xs"><input type="radio" name="options" class="waveform_selection" id="waveform5" autocomplete="off" > 5</label>
+                            <label class="btn btn-default btn-xs"><input type="radio" name="options" class="waveform_selection" id="waveform6" autocomplete="off" > 6</label>
+                        </div>
+                        
+                    </div>
+                </div>
+                <h3>Editor</h3>
+                <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+            </div>
+
+
+
+            <div id="mixer" class="tab-pane fade in">
+                <h3>Mixer</h3>
+                
+                <table class="table" id="table_editor">
+                    <thead>
+                        <tr >
+                                <th>Name</th>
+                                <th>File</th>
+                                <th>Pitch</th>
+                                <th>Gain</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr id="editor0">
+                            <td><input type="text" class="form-control update_sampler uiname" /></td>
+                            <td><select class="form-control update_sampler uifile"></select></td>
+                            <td><input type="range" class="form-control update_sampler uiplaybackrate" min=0 max=10 step="0.1" ></input></td>
+                            <td><input type="range" class="form-control update_sampler uiamp" min=0 max=3 step="0.1"></input></td>
+                            <td><button type="button" class="btn btn-default listen"><i class="fa fa-headphones"></i></button></td>
+                        </tr>
+                        <tr id="editor1">
+                            <td><input type="text" class="form-control update_sampler uiname" /></td>
+                            <td><select class="form-control update_sampler uifile"></select></td>
+                            <td><input type="range" class="form-control update_sampler uiplaybackrate" min=0 max=10 step="0.1" ></input></td>
+                            <td><input type="range" class="form-control update_sampler uiamp" min=0 max=3 step="0.1"></input></td>
+                            <td><button type="button" class="btn btn-default listen"><i class="fa fa-headphones"></i></button></td>
+                        </tr>
+                        <tr id="editor2">
+                            <td><input type="text" class="form-control update_sampler uiname" /></td>
+                            <td><select class="form-control update_sampler uifile"></select></td>
+                            <td><input type="range" class="form-control update_sampler uiplaybackrate" min=0 max=10 step="0.1" ></input></td>
+                            <td><input type="range" class="form-control update_sampler uiamp" min=0 max=3 step="0.1"></input></td>
+                            <td><button type="button" class="btn btn-default listen"><i class="fa fa-headphones"></i></button></td>
+                        </tr>
+                        <tr id="editor3">
+                            <td><input type="text" class="form-control update_sampler  uiname" /></td>
+                            <td><select class="form-control update_sampler  uifile"></select></td>
+                            <td><input type="range" class="form-control update_sampler uiplaybackrate" min=0 max=10 step="0.1" ></input></td>
+                            <td><input type="range" class="form-control update_sampler uiamp" min=0 max=3 step="0.1"></input></td>
+                            <td><button type="button" class="btn btn-default listen"><i class="fa fa-headphones"></i></button></td>
+                        </tr>
+                        <tr id="editor4">
+                            <td><input type="text" class="form-control update_sampler  uiname" /></td>
+                            <td><select class="form-control update_sampler  uifile"></select></td>
+                            <td><input type="range" class="form-control update_sampler  uiplaybackrate" min=0 max=10 step="0.1" ></input></td>
+                            <td><input type="range" class="form-control update_sampler  uiamp" min=0 max=3 step="0.1"></input></td>
+                            <td><button type="button" class="btn btn-default listen"><i class="fa fa-headphones"></i></button></td>
+                        </tr>
+                        <tr id="editor5">
+                            <td><input type="text" class="form-control update_sampler uiname" /></td>
+                            <td><select class="form-control update_sampler uifile"></select></td>
+                            <td><input type="range" class="form-control update_sampler  uiplaybackrate" min=0 max=10 step="0.1" ></input></td>
+                            <td><input type="range" class="form-control update_sampler  uiamp" min=0 max=3 step="0.1"></input></td>
+                            <td><button type="button" class="btn btn-default listen"><i class="fa fa-headphones"></i></button></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+
+            </div>
+
+        </div>
+        
+    
+ 
+    </div>
+</body>
+
+<script>
+    
